@@ -35,7 +35,7 @@ export default {
             plugins: [require('autoprefixer')],
           },
         })
-			}),
+      }),
 			resolve({
 				browser: true,
 				dedupe: ['svelte']
