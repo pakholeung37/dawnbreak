@@ -2,6 +2,8 @@
 @import '../styles/main.scss';
 
 </style>
+
+
 <main>
 	<slot></slot>
 </main>

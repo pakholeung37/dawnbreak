@@ -77,7 +77,15 @@ export default {
 			}),
 			svelte({
 				generate: 'ssr',
-				dev
+        dev,
+        preprocess: sveltePreprocess({
+          scss: {
+            includePaths: ['src'],
+          },
+          postcss: {
+            plugins: [require('autoprefixer')],
+          },
+        })
 			}),
 			resolve({
 				dedupe: ['svelte']
