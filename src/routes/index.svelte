@@ -18,7 +18,7 @@ import SwiperSlide from '../components/modules/swiper/Slide.svelte';
 <style lang="scss">
 .slide {
   width: 100%;
-  height: 100%;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-content: center;
