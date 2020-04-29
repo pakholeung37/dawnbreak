@@ -1,18 +1,18 @@
 <script>
 import Swiper from '../components/modules/swiper/Swiper.svelte';
-import SwiperSlide from '../components/modules/swiper/Slide.svelte';
+import Slide from '../components/modules/swiper/Slide.svelte';
 </script>
 
 <Swiper>
-  <SwiperSlide>
+  <Slide>
     <div class="slide slide-1">red</div>
-  </SwiperSlide>
-  <SwiperSlide>
+  </Slide>
+  <Slide>
     <div class="slide slide-2">blue</div>
-  </SwiperSlide>
-  <SwiperSlide>
+  </Slide>
+  <Slide>
     <div class="slide slide-3">green</div>
-  </SwiperSlide>
+  </Slide>
 </Swiper>
 
 <style lang="scss">

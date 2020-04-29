@@ -4,13 +4,23 @@
   export let autoPlay = true;
   export let duration = 500;
   export let interval = 2500;
+  export let startIndex = 0;
   export let showIndicator = true;
+  export let swiperHeight = 300; //px
+  export let adaptive = false;  //是否适应屏幕
 
+  let ready;
   let swiperElement;
-
-  $: if(swiperElement) {
+  $: ready = !!swiperElement;
+  
+  $: if(ready) {
     new Swiper({
-      selector: swiperElement
+      selector: swiperElement,
+      autoPlay,
+      duration,
+      interval,
+      startIndex,
+      showIndicator,
     })
   }
 </script>
@@ -21,6 +31,6 @@
 
 <style lang="scss">
 .swiper {
-  
+  height: 500px;
 }
 </style>

@@ -163,6 +163,7 @@ export default class Siema {
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
     this.sliderFrame.style.width = `${widthItem * itemsToBuild}px`;
+    this.sliderFrame.style.height = '100%';
     this.enableTransition();
 
     if (this.config.draggable) {
@@ -206,6 +207,7 @@ export default class Siema {
     elementContainer.style.cssFloat = this.config.rtl ? 'right' : 'left';
     elementContainer.style.float = this.config.rtl ? 'right' : 'left';
     elementContainer.style.width = `${this.config.loop ? 100 / (this.innerElements.length + (this.perPage * 2)) : 100 / (this.innerElements.length)}%`;
+    elementContainer.style.height = '100%';
     elementContainer.appendChild(elm);
     return elementContainer;
   }
