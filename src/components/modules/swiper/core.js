@@ -47,6 +47,8 @@ export default class Siema {
   static mergeSettings(options) {
     const settings = {
       selector: '.siema',
+      autoPlay: false,
+      speed: 500,
       duration: 200,
       easing: 'ease-out',
       perPage: 1,
@@ -102,8 +104,8 @@ export default class Siema {
       };
 
       // Touch events
-      this.selector.addEventListener('touchstart', this.touchstartHandler);
-      this.selector.addEventListener('touchend', this.touchendHandler);
+      this.selector.addEventListener('touchstart', (e) => this.touchstartHandler(e) || console.log('touchstart'));
+      this.selector.addEventListener('touchend', (e) => this.touchendHandler(e) || console.log('touchend') );
       this.selector.addEventListener('touchmove', this.touchmoveHandler);
 
       // Mouse events
@@ -147,9 +149,10 @@ export default class Siema {
     this.selector.style.direction = this.config.rtl ? 'rtl' : 'ltr';
 
     // build a frame and slide to a currentSlide
+    if(this.config.autoPlay) this.start(this.config.speed);
+    console.log(this.config)
     this.buildSliderFrame();
-
-    this.config.onInit.call(this);
+    
   }
 
 
@@ -319,7 +322,24 @@ export default class Siema {
     }
   }
 
-
+  /**
+   * autoPlay slider
+   * 
+   */
+  start() {
+    this._autoPlayTimer = setTimeout(() => {
+      if(this.config.loop) {
+        this.next(1, () => {
+          this._autoPlayTimer = setTimeout(() => {
+            this.start()
+          }, this.config.speed);
+        })
+      }
+    }, this.config.speed);
+  }
+  stop() {
+    if(this.config.autoPlay && this._autoPlayTimer) clearTimeout(this._autoPlayTimer);
+  }
   /**
    * Disable transition on sliderFrame.
    */
@@ -452,6 +472,9 @@ export default class Siema {
     this.pointerDown = true;
     this.drag.startX = e.touches[0].pageX;
     this.drag.startY = e.touches[0].pageY;
+
+    // clear autoplay timer
+    if(this.config.autoPlay) this.stop();
   }
 
 
@@ -466,6 +489,9 @@ export default class Siema {
       this.updateAfterDrag();
     }
     this.clearDrag();
+
+    // restart autoplay timer
+    if(this.config.autoPlay) this.start(); 
   }
 
 
@@ -508,6 +534,8 @@ export default class Siema {
     e.stopPropagation();
     this.pointerDown = true;
     this.drag.startX = e.pageX;
+    // clear autoplay timer
+    if(this.config.autoPlay) this.stop();
   }
 
 
@@ -523,6 +551,9 @@ export default class Siema {
       this.updateAfterDrag();
     }
     this.clearDrag();
+
+    // restart autoplay timer
+    if(this.config.autoPlay) this.start();
   }
 
 
@@ -688,6 +719,9 @@ export default class Siema {
       this.selector.removeAttribute('style');
     }
 
+    // clear auto play timer 
+    if(this.config.autoPlay) this.stop();
+     
     if (callback) {
       callback.call(this);
     }
